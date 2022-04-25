@@ -6,23 +6,25 @@ import socket
 #port = input("Port: ")
 
 address = '127.0.0.1'
-port = 80
-message = 'Test'
-buffer = 1024
-error = False
+port = [21, 22, 80, 8080]
+
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-try:
-    s.connect((address, port))
-except socket.error as e:
-    print(e)
-    error = True
+for i in port:
 
-if error == False:
+    error = False
+    
+    try:
+        s.connect((address, i))
+    except socket.error as e:
+        #print(e)
+        error = True
+        print(f"Port {i} is down")
 
-    s.send(message.encode())
 
-    data =  s.recv(buffer)
+    if error == False:
 
-    print(data.decode())
+        s.close()
+        
+        print(f"Port {i} is alive")
