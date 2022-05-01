@@ -30,8 +30,6 @@ def scanports(a, b, address):
             if res == 0:
                 aliveports.append(i)
                 print(f"Port {i} is alive")
-            else:
-                print(f"Port {i} is down")
             s.close()
 
     except socket.gaierror:
