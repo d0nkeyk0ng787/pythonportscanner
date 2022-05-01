@@ -1,23 +1,25 @@
 #! /usr/bin/env python3
 
-# TODO - Implement sys args
-
 # NOTE - I removed the multiprocessing functionality because whilst it works there are some inherent issues with doing port scanning on multiple threads
 
 import sys
 import time
 import socket
+import argparse
 #import multiprocessing
 
-#address = input("IP: ")
-#port = input("Port: ")
+if len(sys.argv) == 2:
+    address = sys.argv[1]
+else:
+    print("Invalid number of arguments passed. Ensure you entered an IP address to scan.")
+    sys.exit()
 
 start = time.time()
 welcome = "Gnomes port scanner - Written in python - Scan will now begin"
+scanning = "Now scanning " + address
 
-def scanports(a, b):
+def scanports(a, b, address):
 
-    address = '127.0.0.1'
     aliveports = []
     
     try:
@@ -45,6 +47,7 @@ def scanports(a, b):
 
     return address, x
 
+
 def finish(address, portcount):
 
     end = time.time()
@@ -58,6 +61,7 @@ def finish(address, portcount):
 if __name__ == "__main__":
 
     print(welcome)
+    print(scanning)
     
     #p1 = multiprocessing.Process(target=scanports, args= [1, 10])
     #p2 = multiprocessing.Process(target=scanports, args= [251, 500])
@@ -74,6 +78,6 @@ if __name__ == "__main__":
     #p3.join()
     #p4.join()
 
-    address, x = scanports(1, 1025)
+    addy, x = scanports(1, 10, address)
 
-    finish(address, x)
+    finish(addy, x)
