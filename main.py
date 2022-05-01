@@ -1,11 +1,13 @@
 #! /usr/bin/env python3
 
-# TODO - Fix the alive ports number not displaying correctly
+# TODO - Implement sys args
+
+# NOTE - I removed the multiprocessing functionality because whilst it works there are some inherent issues with doing port scanning on multiple threads
 
 import sys
 import time
 import socket
-import multiprocessing
+#import multiprocessing
 
 #address = input("IP: ")
 #port = input("Port: ")
@@ -40,23 +42,14 @@ def scanports(a, b):
         sys.exit()
 
     x = len(aliveports)
-    
+
     return address, x
 
-    '''end = time.time()
-    timetaken = (end - start)
-    apcount = len(aliveports)
-    scandonemessage = (f"Portscan Completed | 1 IP Address {address} scanned | There are {apcount} alive ports | Scan completed in {round(timetaken, 4)} seconds")
-    
-    print(scandonemessage)
-    sys.exit()'''
-
-def finish(address, aliveports):
+def finish(address, portcount):
 
     end = time.time()
     timetaken = (end - start)
-    #apcount = aliveports
-    scandonemessage = (f"Portscan Completed | 1 IP Address {address} scanned | There are {aliveports} alive ports | Scan completed in {round(timetaken, 4)} seconds")
+    scandonemessage = (f"Portscan Completed | 1 IP Address {address} scanned | There are {portcount} alive ports | Scan completed in {round(timetaken, 4)} seconds")
 
     print(scandonemessage)
     sys.exit()
@@ -66,22 +59,21 @@ if __name__ == "__main__":
 
     print(welcome)
     
-    p1 = multiprocessing.Process(target=scanports, args= [1, 10])
+    #p1 = multiprocessing.Process(target=scanports, args= [1, 10])
     #p2 = multiprocessing.Process(target=scanports, args= [251, 500])
     #p3 = multiprocessing.Process(target=scanports, args = [501, 750])
     #p4 = multiprocessing.Process(target=scanports, args= [751, 1024])
 
-    p1.start()
+    #p1.start()
     #p2.start()
     #p3.start()
     #p4.start()
 
-    p1.join()
+    #p1.join()
     #p2.join()
     #p3.join()
     #p4.join()
 
-    address, x = scanports(1, 2)
-    print(x)
+    address, x = scanports(1, 1025)
+
     finish(address, x)
-    #print(aliveports)
